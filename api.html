@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>脚本 API 参考 · 神将世界助手</title>
+<style>
+:root{
+  --bg:#0b111c; --bg2:#111a29; --card:#16202f; --card2:#1d2a3f;
+  --stroke:#26354d; --text:#e9eff9; --dim:#8fa0ba; --accent:#4fc3f7; --ok:#4ade80;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.75}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,17,28,.9);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--stroke)}
+header.top .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.brand{font-size:17px;font-weight:700;letter-spacing:.3px}
+.brand span{color:var(--accent)}
+nav.top{margin-left:auto;display:flex;gap:18px;font-size:14px;color:var(--dim)}
+nav.top a{color:var(--dim)}
+nav.top a:hover{color:var(--accent)}
+.hero{padding:72px 0 44px;text-align:center}
+.hero h1{font-size:38px;line-height:1.25;margin:0 0 14px;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--dim);font-size:15px;margin:0 auto 26px;max-width:620px}
+.badge{display:inline-block;padding:5px 12px;border:1px solid var(--stroke);border-radius:999px;
+  color:var(--dim);font-size:12px;margin-bottom:18px;letter-spacing:.4px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#06121f;
+  font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px;transition:.15s}
+.btn:hover{filter:brightness(1.08);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--stroke);font-weight:600}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.meta{margin-top:16px;color:var(--dim);font-size:12.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:24px 0 60px}
+.card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:20px}
+.card h3{margin:0 0 8px;font-size:15px;color:var(--text)}
+.card p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.7}
+.card .k{color:var(--accent);font-family:ui-monospace,Consolas,monospace;font-size:13px}
+footer{border-top:1px solid var(--stroke);padding:26px 0 40px;color:var(--dim);font-size:12.5px;text-align:center}
+
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:36px;padding:34px 0 70px}
+aside.toc{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 110px);overflow:auto;
+  border-right:1px solid var(--stroke);padding-right:16px}
+aside.toc .t{font-size:12px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;margin-bottom:10px}
+aside.toc ul{list-style:none;margin:0;padding:0;font-size:13.5px}
+aside.toc ul ul{padding-left:12px}
+aside.toc li{margin:3px 0}
+aside.toc a{color:var(--dim);display:block;padding:4px 8px;border-radius:8px;border-left:2px solid transparent}
+aside.toc a:hover{color:var(--text);background:var(--card);text-decoration:none}
+article h1{font-size:30px;margin:0 0 18px;letter-spacing:-.4px}
+article h2{font-size:21px;margin:38px 0 14px;padding-top:6px;border-top:1px solid var(--stroke);padding-top:18px}
+article h3{font-size:16.5px;margin:26px 0 10px;color:var(--accent)}
+article p{color:#cfd9e8;font-size:14.5px}
+article li{color:#cfd9e8;font-size:14.5px}
+article strong{color:var(--text)}
+article code{background:var(--card2);color:#9fe3ff;padding:2px 6px;border-radius:6px;
+  font-family:ui-monospace,Consolas,monospace;font-size:12.8px}
+article pre{background:#070c14;border:1px solid var(--stroke);border-radius:12px;padding:16px 18px;
+  overflow:auto;font-size:12.8px;line-height:1.65}
+article pre code{background:none;padding:0;color:#cfe6ff}
+article table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.5px;display:block;overflow:auto}
+article th,article td{border:1px solid var(--stroke);padding:8px 12px;text-align:left}
+article th{background:var(--card);color:var(--text)}
+article td{color:#cfd9e8}
+article blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--accent);
+  background:var(--card);border-radius:0 10px 10px 0;color:var(--dim)}
+article hr{border:none;border-top:1px solid var(--stroke);margin:26px 0}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;gap:18px}
+  aside.toc{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--stroke);
+    padding:0 0 14px}
+  article h2{border-top:none;padding-top:0}
+  .hero h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">神将世界<span>助手</span></div>
+  <nav class="top">
+    <a href="index.html">首页</a>
+    <a href="api.html">脚本 API</a>
+    <a href="https://my.feishu.cn/file/RS2QbD4YEo8KajxccQpcAxPE62d" target="_blank" rel="noopener">下载 APK</a>
+  </nav>
+</div></header>
+
+<div class="wrap"><div class="layout">
+  <aside class="toc"><div class="t">目录</div><div class="toc">
+<ul>
+<li><a href="#0">0. 一句话理解</a></li>
+<li><a href="#1">1. 脚本文件规范</a><ul>
+<li><a href="#11">1.1 文件头（必须）</a></li>
+<li><a href="#12">1.2 入口函数（必须）</a></li>
+<li><a href="#13">1.3 保存与调用</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 运行时规则</a></li>
+<li><a href="#3-ctx">3. ctx 完整接口</a><ul>
+<li><a href="#31">3.1 基础</a></li>
+<li><a href="#32">3.2 信息</a></li>
+<li><a href="#33-app">3.3 交互（仅 App 内）</a></li>
+<li><a href="#34">3.4 战斗与数据</a></li>
+<li><a href="#341">3.4.1 异兽营 / 孵蛋</a></li>
+<li><a href="#342">3.4.2 煮酒答题</a></li>
+<li><a href="#35">3.5 已登录对象（高级）</a></li>
+<li><a href="#36">3.6 原始协议（危险）</a></li>
+<li><a href="#37-v19157">3.7 协议级开放接口（v1.9.157 新增）</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 退出与错误</a></li>
+<li><a href="#5">5. 完整示例：城池孵蛋（插件式，不登录）</a></li>
+<li><a href="#6">6. 调试建议</a></li>
+<li><a href="#7">7. 限制与后续</a></li>
+<li><a href="#8">8. 安全</a></li>
+<li><a href="#9-v19157">9. 内置插件与协议速查（v1.9.157）</a><ul>
+<li><a href="#91-plugin_treasure_droppy-v220">9.1 天降宝箱（plugin_treasure_drop.py v2.2.0）</a></li>
+<li><a href="#92-plugin_minigame_ddppy-v100">9.2 星魂对对碰（plugin_minigame_ddp.py v1.0.0）</a></li>
+<li><a href="#93-plugin_forgepy-v220">9.3 锻造锤击（plugin_forge.py v2.2.0）</a></li>
+<li><a href="#94-vs">9.4 协议编号 vs 用途（易错）</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+  <article><h1 id="09-api-v1">09 - 脚本 API 参考（v1）</h1>
+<blockquote>
+<p>适用版本：Android App <strong>1.9.1+</strong>（脚本宿主 API v1）<br />
+脚本目录：<code>/data/data/com.sjsj.bot/files/scripts/&lt;id&gt;/main.py</code><br />
+目的：让第三方脚本以“插件”方式复用 App 内<strong>已经登录</strong>的连接，不需要在脚本里再登录一次。</p>
+</blockquote>
+<hr />
+<h2 id="0">0. 一句话理解</h2>
+<p>脚本不是独立程序，而是<strong>跑在 App 内部、拿到已登录机器人对象的一段 Python</strong>：</p>
+<pre><code>App 登录 → bot.gs（已连接）
+              ↓
+        脚本 ctx.bot / ctx.gs
+              ↓
+     发协议、读状态、弹窗问用户
+</code></pre>
+<p>所以：</p>
+<ul>
+<li>✅ 脚本里<strong>不要</strong>再调用登录、不要再 new <code>SjsjBot</code>、不要读 <code>.cred_cache.json</code></li>
+<li>✅ 直接用 <code>ctx.gs</code> / <code>ctx.send()</code> 操作当前连接</li>
+<li>✅ 二次登录会顶掉 App 的连接，这就是之前“软件被卡掉”的原因</li>
+</ul>
+<hr />
+<h2 id="1">1. 脚本文件规范</h2>
+<h3 id="11">1.1 文件头（必须）</h3>
+<pre><code class="language-python"># @name 城池孵蛋
+# @version 1.0.0
+# @author 你的名字
+# @api 1
+# @desc 一句话说明
+# @entry run
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@name</code></td>
+<td>是</td>
+<td>列表显示名；编辑页名称留空时用它</td>
+</tr>
+<tr>
+<td><code>@version</code></td>
+<td>否</td>
+<td>默认 <code>1.0.0</code></td>
+</tr>
+<tr>
+<td><code>@author</code></td>
+<td>否</td>
+<td>默认“未知”</td>
+</tr>
+<tr>
+<td><code>@api</code></td>
+<td>否</td>
+<td>脚本要求的宿主 API 版本，超过 App 支持版本会拒绝保存</td>
+</tr>
+<tr>
+<td><code>@desc</code></td>
+<td>否</td>
+<td>列表里的说明文字</td>
+</tr>
+<tr>
+<td><code>@entry</code></td>
+<td>否</td>
+<td>入口函数名，默认 <code>run</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="12">1.2 入口函数（必须）</h3>
+<pre><code class="language-python">def run(ctx):
+    ...
+</code></pre>
+<ul>
+<li>必须有且只有一个参数 <code>ctx</code>。</li>
+<li>保存时会做 <code>ast.parse</code> 语法检查，并检查入口函数是否存在。</li>
+<li>单文件、UTF-8、最大 256 KB。</li>
+</ul>
+<h3 id="13">1.3 保存与调用</h3>
+<ul>
+<li>App「脚本」页：<strong>导入 .py</strong> / <strong>粘贴新建</strong> → 保存后变成列表里的卡片</li>
+<li>卡片按钮：<strong>运行 / 编辑 / 删除</strong></li>
+<li>运行中禁止删除、禁止修改当前脚本</li>
+<li>同一时间只能跑一个任务（脚本与副本/器灵互斥）</li>
+</ul>
+<hr />
+<h2 id="2">2. 运行时规则</h2>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>后台线程</td>
+<td>脚本在独立 daemon 线程运行，不阻塞界面</td>
+</tr>
+<tr>
+<td>协作式停止</td>
+<td>循环里必须调用 <code>ctx.check_stop()</code>；阻塞等待用 <code>ctx.sleep()</code></td>
+</tr>
+<tr>
+<td>异常隔离</td>
+<td>脚本报错只写日志，不会让 App 崩溃</td>
+</tr>
+<tr>
+<td>停止</td>
+<td>点“停止当前脚本”会置停止位；正在 <code>ctx.dungeon()</code> 时会等本关结束</td>
+</tr>
+<tr>
+<td>弹窗</td>
+<td>交互 API 会阻塞脚本线程，直到用户操作完成；停止时会自动按“取消”返回</td>
+</tr>
+<tr>
+<td>线程安全</td>
+<td>不要在脚本里自己开线程操作 <code>ctx.gs</code>，协议并发会触发风控</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-ctx">3. ctx 完整接口</h2>
+<h3 id="31">3.1 基础</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>返回</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.api_version</code></td>
+<td><code>int</code></td>
+<td>宿主 API 版本，当前 <code>1</code></td>
+</tr>
+<tr>
+<td><code>ctx.name</code></td>
+<td><code>str</code></td>
+<td>脚本名</td>
+</tr>
+<tr>
+<td><code>ctx.meta</code></td>
+<td><code>dict</code></td>
+<td>文件头元数据（只读副本）</td>
+</tr>
+<tr>
+<td><code>ctx.log(msg)</code></td>
+<td><code>None</code></td>
+<td>写 App 日志，自动加 <code>[脚本:名字]</code> 前缀</td>
+</tr>
+<tr>
+<td><code>ctx.sleep(sec)</code></td>
+<td><code>None</code></td>
+<td>可被停止打断的等待</td>
+</tr>
+<tr>
+<td><code>ctx.check_stop()</code></td>
+<td><code>None</code></td>
+<td>已请求停止时抛 <code>ScriptStop</code></td>
+</tr>
+<tr>
+<td><code>ctx.stopped</code></td>
+<td><code>bool</code></td>
+<td>是否已请求停止</td>
+</tr>
+<tr>
+<td><code>ctx.exit(msg="")</code></td>
+<td>不返回</td>
+<td>主动结束脚本，抛 <code>ScriptExit</code></td>
+</tr>
+<tr>
+<td><code>ctx.require_online()</code></td>
+<td><code>gs</code></td>
+<td>未登录时抛 <code>RuntimeError</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2 信息</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>返回</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.info()</code></td>
+<td><code>dict</code></td>
+<td>框架、App、账号、脚本、任务信息，见下表</td>
+</tr>
+<tr>
+<td><code>ctx.status()</code></td>
+<td><code>dict</code></td>
+<td>账号在线状态、角色、uid、地图、HP</td>
+</tr>
+</tbody>
+</table>
+<p><code>ctx.info()</code> 返回：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>api_version</code></td>
+<td>int</td>
+<td>宿主 API 版本</td>
+</tr>
+<tr>
+<td><code>app_version</code></td>
+<td>str</td>
+<td>App 版本名，如 <code>1.9</code>；PC 上为 <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>script_id</code></td>
+<td>str</td>
+<td>当前脚本 ID</td>
+</tr>
+<tr>
+<td><code>script_name</code></td>
+<td>str</td>
+<td>当前脚本名</td>
+</tr>
+<tr>
+<td><code>online</code></td>
+<td>bool</td>
+<td>是否在线</td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td>int</td>
+<td>角色 uid</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td>str</td>
+<td>角色名</td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>str</td>
+<td>当前地图</td>
+</tr>
+<tr>
+<td><code>task</code></td>
+<td>str</td>
+<td><code>script</code> / <code>dungeon</code> / <code>catch</code> / <code>idle</code></td>
+</tr>
+<tr>
+<td><code>elapsed</code></td>
+<td>int</td>
+<td>脚本已运行秒数</td>
+</tr>
+</tbody>
+</table>
+<p><code>ctx.status()</code> 返回：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>online</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>hp</code></td>
+<td>int / None</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-app">3.3 交互（仅 App 内）</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>返回</th>
+<th>取消时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.input(title, hint="", default="", password=False)</code></td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>ctx.input_multiline(title, hint="", default="")</code></td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>ctx.select(title, options, default=0)</code></td>
+<td><code>int</code> 下标</td>
+<td><code>-1</code></td>
+</tr>
+<tr>
+<td><code>ctx.confirm(title, message)</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>ctx.alert(title, message)</code></td>
+<td><code>None</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ctx.toast(message)</code></td>
+<td><code>None</code></td>
+<td>不阻塞</td>
+</tr>
+<tr>
+<td><code>ctx.copy_text(text)</code></td>
+<td><code>bool</code></td>
+<td>写入系统剪贴板</td>
+</tr>
+<tr>
+<td><code>ctx.get_clipboard()</code></td>
+<td><code>str</code></td>
+<td>读取系统剪贴板，失败返回 <code>""</code></td>
+</tr>
+<tr>
+<td><code>ctx.save_text(name, content)</code></td>
+<td><code>str</code> / <code>None</code></td>
+<td>保存到 <code>下载/SJSJBot/</code>，返回可读路径；失败回退 App 外部目录</td>
+</tr>
+</tbody>
+</table>
+<p>说明：</p>
+<ul>
+<li><code>options</code> 传 Python 列表，元素会转成字符串。</li>
+<li><code>password=True</code> 时输入框内容显示为圆点。</li>
+<li>弹窗在 App 主线程显示，脚本线程等待；用户点返回键等同取消。</li>
+<li>PC 端没有 UI，以上接口会记录一条日志并返回默认值（<code>None</code> / <code>-1</code> / <code>False</code>），方便干跑逻辑。</li>
+</ul>
+<p>示例：</p>
+<pre><code class="language-python">def run(ctx):
+    mode = ctx.select(&quot;选择模式&quot;, [&quot;普通&quot;, &quot;高级&quot;, &quot;全部&quot;], 0)
+    if mode &lt; 0:
+        return
+
+    times_text = ctx.input(&quot;孵化次数&quot;, &quot;输入数字&quot;, &quot;10&quot;)
+    if times_text is None:
+        return
+    try:
+        times = int(times_text)
+    except ValueError:
+        ctx.alert(&quot;参数错误&quot;, &quot;次数必须是整数&quot;)
+        return
+
+    if not ctx.confirm(&quot;确认&quot;, &quot;将孵化 %d 次，是否继续？&quot; % times):
+        return
+
+    ctx.toast(&quot;开始孵化&quot;)
+    for i in range(times):
+        ctx.check_stop()
+        ctx.log(&quot;第 %d/%d 次&quot; % (i + 1, times))
+        ctx.sleep(1.5)
+    ctx.alert(&quot;完成&quot;, &quot;孵化结束&quot;)
+</code></pre>
+<h3 id="34">3.4 战斗与数据</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.dungeon(pass_id, style="guanyu", times=1, max_stages=10)</code></td>
+<td>同步刷副本，复用现有打法</td>
+</tr>
+<tr>
+<td><code>ctx.catch(qualities=(5,), soul_id=None, appraise=False)</code></td>
+<td>进入抓器灵并循环，直到停止</td>
+</tr>
+<tr>
+<td><code>ctx.start_catchcat(style="guanyu", hit_all=False, resource=None)</code></td>
+<td>一键完成今日躲猫猫；<code>style</code>=打法名，<code>hit_all</code>=全屏命中，<code>resource</code>=覆盖默认资源类型(neili/rage/special)</td>
+</tr>
+<tr>
+<td><code>ctx.stop_catchcat()</code></td>
+<td>停止躲猫猫（中断战斗→退战魂殿，保持在线）</td>
+</tr>
+<tr>
+<td><code>ctx.catchcat_state()</code></td>
+<td>查询今日躲猫猫谜题状态（不占任务位）</td>
+</tr>
+<tr>
+<td><code>ctx.soul_list(timeout=6)</code></td>
+<td>拉武魂列表，返回 <code>list[dict]</code></td>
+</tr>
+<tr>
+<td><code>ctx.switch_soul(slot, timeout=8)</code></td>
+<td>切换武魂，返回 0 表示成功</td>
+</tr>
+<tr>
+<td><code>ctx.bag(timeout=10)</code></td>
+<td>刷新背包，返回 <code>list[dict]</code>，每条带 <code>name</code>（本地名称映射）</td>
+</tr>
+<tr>
+<td><code>ctx.bag_use(index, timeout=6)</code></td>
+<td>使用背包物品（1031/1060），返回 <code>{ok,msg,itemId,count,code}</code></td>
+</tr>
+<tr>
+<td><code>ctx.soul_equip(slot, bag_index, timeout=8)</code></td>
+<td>把器魂球装到出战槽（5635/5636）</td>
+</tr>
+<tr>
+<td><code>ctx.soul_unequip(slot, timeout=8)</code></td>
+<td>卸下武魂到背包（5658 封印/5659）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="341">3.4.1 异兽营 / 孵蛋</h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>返回</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.camp_state()</code></td>
+<td><code>dict</code></td>
+<td>读取孵蛋池 + 异兽营背包 + 资源，见下</td>
+</tr>
+<tr>
+<td><code>ctx.camp_incubate(building_id, bag_index)</code></td>
+<td><code>dict</code></td>
+<td>开始孵蛋；<code>building_id</code>=103/104，<code>bag_index</code>=<code>eggs[i]["index"]</code></td>
+</tr>
+<tr>
+<td><code>ctx.camp_collect(building_id)</code></td>
+<td><code>dict</code></td>
+<td>领取孵蛋产物</td>
+</tr>
+<tr>
+<td><code>ctx.camp_speedup(building_id)</code></td>
+<td><code>dict</code></td>
+<td>加速孵蛋（会消耗资源，默认不用）</td>
+</tr>
+<tr>
+<td><code>ctx.camp_farm_plant(building_id, count=0, seed_id=0)</code></td>
+<td><code>dict</code></td>
+<td>种植石料/肉块；<code>building_id</code>=2 石料地 / 3 肉块地，<code>count=0</code> 种满所有空格，<code>seed_id=0</code> 沿用已有种子或默认（104/4）</td>
+</tr>
+<tr>
+<td><code>ctx.camp_farm_collect(building_id, count=0)</code></td>
+<td><code>dict</code></td>
+<td>领取石料/肉块；<code>building_id</code>=2 石料地 / 3 肉块地，<code>count=0</code> 表示领取全部已成熟组</td>
+</tr>
+<tr>
+<td><code>ctx.camp_claim_rewards(max_count=20)</code></td>
+<td><code>dict</code></td>
+<td>城池战报：领取所有胜利且未领的铜币奖励（30503/30507，每条间隔 800ms）</td>
+</tr>
+<tr>
+<td><code>ctx.camp_repair_wall(times=3)</code></td>
+<td><code>dict</code></td>
+<td>城池战报：城墙耐久 &lt;100 时用石料修补（30480/30481，每次捐 10，<code>ret=1</code> 成功）</td>
+</tr>
+</tbody>
+</table>
+<p><code>ctx.camp_state()</code> 返回：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pools</code></td>
+<td><code>list[dict]</code></td>
+<td>池状态，固定 2 个（103 太虚池 / 104 太清池）</td>
+</tr>
+<tr>
+<td><code>eggs</code></td>
+<td><code>list[dict]</code></td>
+<td>背包里的天命蛋（610001~610999）</td>
+</tr>
+<tr>
+<td><code>others</code></td>
+<td><code>list[dict]</code></td>
+<td>背包里其它物品（原始记录）</td>
+</tr>
+<tr>
+<td><code>res</code></td>
+<td><code>dict</code></td>
+<td><code>{33: 石料, 34: 肉块, 36: 神军石}</code></td>
+</tr>
+<tr>
+<td><code>farms</code></td>
+<td><code>list[dict]</code></td>
+<td>石料地/肉块地，见下</td>
+</tr>
+<tr>
+<td><code>bagNum</code></td>
+<td><code>int</code></td>
+<td>异兽营背包容量</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>可直接弹窗/打印的中文摘要</td>
+</tr>
+</tbody>
+</table>
+<p><code>farms[i]</code> 字段（资源生产建筑）：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>building</code></td>
+<td>2 石料地 / 3 肉块地 / 101 材料地</td>
+</tr>
+<tr>
+<td><code>name</code> / <code>resName</code></td>
+<td>显示名 / 产出资源名</td>
+</tr>
+<tr>
+<td><code>level</code> / <code>total</code> / <code>ready</code></td>
+<td>等级 / 总格数 / 已成熟的组数</td>
+</tr>
+<tr>
+<td><code>empty</code> / <code>seed</code></td>
+<td>空格数 / 上次使用的种子 ID（无则默认 104/4）</td>
+</tr>
+<tr>
+<td><code>grids</code></td>
+<td><code>[{index, farmId, status, endTs, remain}]</code>，<code>status</code>=empty/growing/ready</td>
+</tr>
+<tr>
+<td><code>grids[i].farmId</code></td>
+<td>该格种子 ID，0 表示空格</td>
+</tr>
+</tbody>
+</table>
+<p><code>camp_farm_plant</code> 返回：</p>
+<pre><code class="language-python">{&quot;ok&quot;: True,  &quot;done&quot;: 3, &quot;empty&quot;: 3, &quot;seed&quot;: 104, &quot;refreshed&quot;: True, &quot;msg&quot;: &quot;种植成功 3 格&quot;}
+{&quot;ok&quot;: False, &quot;ret&quot;: -12, &quot;done&quot;: 0, &quot;msg&quot;: &quot;种植失败：建筑等级与种子等级不符&quot;}
+</code></pre>
+<p>种植错误码（30471）：<code>-9</code> 生产资源建筑错误、<code>-10</code> 建筑不存在、<code>-12</code> 建筑等级与种子等级不符、<code>-13</code> 地块已在生产中、<code>-15</code> 资源满、<code>-16</code> 资源不足、<code>-17</code> 仓库容量不足。<br />
+<code>count=0</code> 或达到空格数时走客户端「一键种满」（<code>gridIndex=0</code>），只发一包。</p>
+<p><code>camp_farm_collect</code> 返回：</p>
+<pre><code class="language-python">{&quot;ok&quot;: True,  &quot;done&quot;: 2, &quot;ready&quot;: 2, &quot;msg&quot;: &quot;领取成功 2 组&quot;}
+{&quot;ok&quot;: False, &quot;ret&quot;: -17, &quot;done&quot;: 0, &quot;msg&quot;: &quot;领取失败：仓库容量不足&quot;}
+</code></pre>
+<p>资源领取错误码（30473）：<code>1</code> 成功、<code>-11</code> 无法采集、<code>-14</code> 时间未到、<code>-15</code> 资源满、<code>-17</code> 仓库容量不足。</p>
+<p><code>pools[i]</code> 字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>building</code></td>
+<td>103 / 104</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>太虚池 / 太清池</td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>池等级</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>该等级总孵蛋时长（秒）</td>
+</tr>
+<tr>
+<td><code>eggId</code> / <code>eggName</code></td>
+<td>正在孵的蛋；空闲为 0/空串</td>
+</tr>
+<tr>
+<td><code>beastId</code> / <code>quality</code> / <code>ability</code></td>
+<td>产物预览</td>
+</tr>
+<tr>
+<td><code>endTs</code></td>
+<td>完成时间戳（秒）</td>
+</tr>
+<tr>
+<td><code>remain</code></td>
+<td>剩余秒数（已夹到 ≥0）</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>idle</code> 空闲 / <code>hatching</code> 孵化中 / <code>ready</code> 可领取</td>
+</tr>
+</tbody>
+</table>
+<p><code>eggs[i]</code> 字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index</code></td>
+<td>背包记录下标，<strong>孵蛋时传给 <code>camp_incubate</code></strong></td>
+</tr>
+<tr>
+<td><code>id</code> / <code>name</code></td>
+<td>蛋 ID / 中文名</td>
+</tr>
+<tr>
+<td><code>num</code></td>
+<td>数量</td>
+</tr>
+<tr>
+<td><code>cost33</code> / <code>cost34</code></td>
+<td>需要石料 / 肉块</td>
+</tr>
+<tr>
+<td><code>enough</code></td>
+<td>当前资源是否够（已按 <code>res</code> 判断）</td>
+</tr>
+<tr>
+<td><code>quality</code> / <code>qualityId</code></td>
+<td>品质字段（原样）</td>
+</tr>
+</tbody>
+</table>
+<p><code>ctx.camp_incubate</code> / <code>camp_collect</code> / <code>camp_speedup</code> 返回：</p>
+<pre><code class="language-python">{&quot;ok&quot;: True,  &quot;msg&quot;: &quot;开始孵蛋：三才蛋&quot;, ...}       # 成功
+{&quot;ok&quot;: False, &quot;msg&quot;: &quot;材料不足&quot;, &quot;ret&quot;: -16}        # 失败，ret 为服务器错误码
+</code></pre>
+<p>孵蛋错误码（30601）：<code>1</code> 蛋不足、<code>-16</code> 材料不足、<code>-13</code> 孵蛋中。<br />
+领取（30603）：<code>ret=1</code> 背包满。<br />
+加速（30605）：<code>ret=1</code> 资源不足。</p>
+<p>孵蛋总时长只由池等级决定（<code>propUnifyBuilding</code> 配置）：</p>
+<table>
+<thead>
+<tr>
+<th>池等级</th>
+<th>总时长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lv1</td>
+<td>5 小时</td>
+</tr>
+<tr>
+<td>Lv2</td>
+<td>4 小时 30 分</td>
+</tr>
+<tr>
+<td>Lv3</td>
+<td>4 小时</td>
+</tr>
+<tr>
+<td>Lv4</td>
+<td>3 小时 30 分</td>
+</tr>
+<tr>
+<td>Lv5</td>
+<td>3 小时</td>
+</tr>
+</tbody>
+</table>
+<p>孵蛋协议速查：</p>
+<table>
+<thead>
+<tr>
+<th>请求</th>
+<th>回包</th>
+<th>包体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>30600</code></td>
+<td><code>30601</code></td>
+<td><code>int buildingId, int bagIndex</code></td>
+</tr>
+<tr>
+<td><code>30602</code></td>
+<td><code>30603</code></td>
+<td><code>int buildingId</code></td>
+</tr>
+<tr>
+<td><code>30604</code></td>
+<td><code>30605</code></td>
+<td><code>int buildingId</code></td>
+</tr>
+<tr>
+<td><code>1180</code> / <code>1170</code></td>
+<td><code>1181</code> / <code>1171</code></td>
+<td>异兽营背包（1171 多一个 <code>isFull</code>）</td>
+</tr>
+<tr>
+<td><code>30466</code></td>
+<td><code>30467</code></td>
+<td><code>int ret, uint pid</code> + 资源段 + 建筑段（103/104 各带 5 个 int 池状态）</td>
+</tr>
+<tr>
+<td><code>30476</code></td>
+<td><code>30477</code></td>
+<td>王国状态，回包后客户端再发 <code>30466</code></td>
+</tr>
+<tr>
+<td><code>30470</code></td>
+<td><code>30471</code></td>
+<td><code>int buildingId, int gridIndex, int seedId</code> → <code>int ret, uint pid</code>（种植；<code>gridIndex=0</code> 种满空格）</td>
+</tr>
+<tr>
+<td><code>30472</code></td>
+<td><code>30473</code></td>
+<td><code>int buildingId, int gridIndex</code> → <code>int ret</code>（领取资源地一组）</td>
+</tr>
+</tbody>
+</table>
+<p>资源地数据在 30467 建筑段内：建筑 <code>2/3/101</code> 附带 <code>int count</code> + count × (<code>short gridIndex, int farmId, int readyTs</code>)，<code>farmId=0</code> 为空格，<code>readyTs &lt;= now</code> 且 <code>farmId != 0</code> 即可领取。</p>
+<blockquote>
+<p>池状态 5 个 int：<code>eggId, endTs(秒), beastId, quality, ability</code>。</p>
+</blockquote>
+<h3 id="342">3.4.2 煮酒答题</h3>
+<p>本地题库随 App 内置（种子 140 条），学习到的新答案写入 App 私有目录 <code>bonfire_answers.json</code>。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>返回</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.bonfire_state()</code></td>
+<td><code>dict</code>/<code>None</code></td>
+<td>发 9006 并等 9007，返回当前答题状态；超时返回 <code>None</code></td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_open()</code></td>
+<td><code>dict</code>/<code>None</code></td>
+<td>9008(flag=1, idx=0) 开启答题，返回 9009</td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_answer(index)</code></td>
+<td><code>dict</code>/<code>None</code></td>
+<td>9008(flag=0, idx=index) 提交答案，<code>index</code> 1~4，返回 9009</td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_bank_size()</code></td>
+<td><code>int</code></td>
+<td>本地题库条数</td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_bank_answer(qid)</code></td>
+<td><code>int</code></td>
+<td>题库答案；<code>0</code> 表示没有</td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_learn(qid, answer)</code></td>
+<td><code>bool</code></td>
+<td>写入/纠正答案（自动落盘）</td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_import(text)</code></td>
+<td><code>(新增数, 总数)</code></td>
+<td>解析 <code>123: 4</code> 或 <code>var importMap = {123:4}</code></td>
+</tr>
+<tr>
+<td><code>ctx.bonfire_export()</code></td>
+<td><code>str</code></td>
+<td>导出为 <code>var importMap = {...};</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>ctx.bonfire_state()</code> 返回字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answerStatus</code></td>
+<td><code>0</code> 未开始 / <code>1</code> 答题中 / <code>2</code> 已作答（<code>answerIndex</code> 即正确答案）/ <code>3</code> 已结束</td>
+</tr>
+<tr>
+<td><code>statusEndTime</code></td>
+<td>本状态结束时间戳（秒）</td>
+</tr>
+<tr>
+<td><code>questionId</code></td>
+<td>题目 ID（学习时作为 key）</td>
+</tr>
+<tr>
+<td><code>selectAnswerIndex</code></td>
+<td>已选答案，<code>0</code> 表示未作答</td>
+</tr>
+<tr>
+<td><code>answerIndex</code></td>
+<td>正确答案，<code>0</code> 表示尚未公布</td>
+</tr>
+<tr>
+<td><code>answerReward</code></td>
+<td>累计奖励</td>
+</tr>
+<tr>
+<td><code>questionIndex</code></td>
+<td>第几题</td>
+</tr>
+</tbody>
+</table>
+<p>协议速查：</p>
+<table>
+<thead>
+<tr>
+<th>请求</th>
+<th>回包</th>
+<th>包体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>9006</code>（空）</td>
+<td><code>9007</code></td>
+<td><code>7×int32</code>，无前导字段</td>
+</tr>
+<tr>
+<td><code>9008</code></td>
+<td><code>9009</code></td>
+<td>请求 <code>int flag, int idx</code>；回包 <code>int result, int questionId, int selectAnswerIndex</code></td>
+</tr>
+</tbody>
+</table>
+<p>节奏要点：答完后需<strong>主动再发一次 9006</strong> 才会推进到下一题（约 2~3 秒）；只在 <code>answerStatus=2</code> 或 <code>selectAnswerIndex&gt;0</code> 时学习答案，未作答时 <code>sel=0/ans=0</code> 不能学。</p>
+<h3 id="35">3.5 已登录对象（高级）</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.bot</code></td>
+<td>当前 <code>SjsjBot</code> 实例</td>
+</tr>
+<tr>
+<td><code>ctx.gs</code></td>
+<td>当前 <code>GameSession</code>（已连接 socket）</td>
+</tr>
+<tr>
+<td><code>ctx.pass_handler</code></td>
+<td>副本处理器</td>
+</tr>
+<tr>
+<td><code>ctx.soul</code></td>
+<td>武魂处理器</td>
+</tr>
+<tr>
+<td><code>ctx.goods</code></td>
+<td>背包处理器</td>
+</tr>
+<tr>
+<td><code>ctx.combat</code></td>
+<td>战斗处理器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36">3.6 原始协议（危险）</h3>
+<pre><code class="language-python">ctx.send(proto, data)
+</code></pre>
+<ul>
+<li><code>proto</code>：协议号，<code>int</code></li>
+<li><code>data</code>：<code>bytes</code> 或十六进制字符串（<code>"01 02 FF"</code> / <code>"0102ff"</code> 均可）</li>
+<li>返回 <code>gs.send</code> 的结果；<strong>只发不收</strong>，不等服务器回复。</li>
+</ul>
+<blockquote>
+<p>⚠ 使用 <code>ctx.send</code> / <code>ctx.bot</code> / <code>ctx.gs</code> 的脚本会在列表里标 <code>⚠ 原始协议</code>。<br />
+高频发包、双弹并行等形态会触发踢线/封号，参考 <code>03-副本战斗与风控.md</code>。</p>
+</blockquote>
+<h3 id="37-v19157">3.7 协议级开放接口（v1.9.157 新增）</h3>
+<blockquote>
+<p>设计原则：<strong>框架只给原语，业务由开发者自己封装</strong>。不再为每个活动单独加接口——<br />
+你能对协议做的事情，这里全部开放。</p>
+</blockquote>
+<h4 id="371-wire">3.7.1 编解码（小端，与游戏 wire 一致）</h4>
+<pre><code class="language-python">w = ctx.writer()
+w.writeInt(5000).writeShort(4).writeUTF(&quot;名字&quot;).writeBoolean(True)
+payload = w.bytes()
+
+r = ctx.reader(payload)
+a = r.readInt()          # 5000
+b = r.readShort()        # 4
+s = r.readUTF()          # &quot;名字&quot;
+c = r.readBoolean()      # True
+r.at_end()               # True
+r.offset / r.remaining / r.peek(4)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>写</th>
+<th>读</th>
+<th>宽度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>writeByte</code></td>
+<td><code>readByte</code></td>
+<td>1B 有符号</td>
+</tr>
+<tr>
+<td><code>writeUnsignedByte</code></td>
+<td><code>readUnsignedByte</code></td>
+<td>1B</td>
+</tr>
+<tr>
+<td><code>writeShort</code></td>
+<td><code>readShort</code></td>
+<td>2B 有符号</td>
+</tr>
+<tr>
+<td><code>writeUnsignedShort</code></td>
+<td><code>readUnsignedShort</code></td>
+<td>2B</td>
+</tr>
+<tr>
+<td><code>writeInt</code></td>
+<td><code>readInt</code></td>
+<td>4B 有符号</td>
+</tr>
+<tr>
+<td><code>writeUnsignedInt</code></td>
+<td><code>readUnsignedInt</code></td>
+<td>4B</td>
+</tr>
+<tr>
+<td><code>writeLong</code> / <code>writeUnsignedLong</code></td>
+<td><code>readLong</code> / <code>readUnsignedLong</code></td>
+<td>8B</td>
+</tr>
+<tr>
+<td><code>writeFloat</code> / <code>writeDouble</code></td>
+<td><code>readFloat</code> / <code>readDouble</code></td>
+<td>4B / 8B</td>
+</tr>
+<tr>
+<td><code>writeBoolean</code></td>
+<td><code>readBoolean</code></td>
+<td>1B</td>
+</tr>
+<tr>
+<td><code>writeUTF</code></td>
+<td><code>readUTF</code></td>
+<td>ushort 长度 + UTF-8</td>
+</tr>
+<tr>
+<td><code>writeBytes</code> / <code>writeHex</code></td>
+<td><code>readBytes(n)</code> / <code>readHex(n)</code> / <code>readRest()</code></td>
+<td>原始字节</td>
+</tr>
+</tbody>
+</table>
+<p>越界会抛 <code>ValueError</code>，并带上 <code>offset</code> 与剩余长度，便于定位协议改版。</p>
+<p>便捷发包：</p>
+<pre><code class="language-python">ctx.send_fields(8270, (&quot;uint&quot;, 5000), (&quot;uint&quot;, 4))
+ctx.send_fields(30992, (&quot;short&quot;, 1), (&quot;int&quot;, 0))
+</code></pre>
+<h4 id="372">3.7.2 监听协议</h4>
+<pre><code class="language-python">def on_packet(body):
+    r = ctx.reader(body)
+    score = r.readInt()
+
+h = ctx.listen(8271, on_packet)                       # 所有 8271
+h = ctx.listen(8271, on_packet, match=b&quot;\x00\x01&quot;)     # 包体含该字节段才回调
+h = ctx.listen(8271, on_packet, match=lambda b: len(b) &gt; 8)  # 自定义判定
+h = ctx.listen(8271, on_packet, once=True)             # 命中一次自动解除
+
+ctx.unlisten(h)      # 解除单个
+ctx.unlisten_all()   # 解除全部（脚本结束也会自动清理）
+</code></pre>
+<ul>
+<li><code>match</code> 支持 <code>None</code> / <code>bytes</code> / hex 字符串（<code>"00 01"</code>）/ <code>callable</code></li>
+<li>回调在<strong>接收线程</strong>执行，内部异常会被捕获并写日志，不会中断连接</li>
+<li><strong>不会吞掉框架原有解析</strong>：注册后框架自己对该协议的处理仍会正常执行</li>
+</ul>
+<h4 id="373-">3.7.3 等待与请求-响应</h4>
+<pre><code class="language-python">body = ctx.wait(1068, timeout=5)                    # 等一个包，超时返回 None
+
+body = ctx.request(8274, b&quot;&quot;, expect=8275, timeout=5)  # 发 8274 等 8275
+if body is None:
+    ctx.log(&quot;服务器没回包&quot;)
+</code></pre>
+<h4 id="374">3.7.4 声明式自动应答</h4>
+<pre><code class="language-python"># 收到 8995 且包体含 0x01，就回 8996
+ctx.auto_reply(8995, 8996, match=b&quot;\x01&quot;, reply=b&quot;\x00\x00&quot;)
+
+# 动态构造回包
+def build(body):
+    w = ctx.writer()
+    w.writeInt(len(body))
+    return w.bytes()
+
+ctx.auto_reply(8271, 8272, builder=build, once=True)
+</code></pre>
+<p><code>builder(body) -&gt; bytes</code> 优先于固定 <code>reply</code>。声明式规则同样遵守 <code>match</code> / <code>once</code> 语义。</p>
+<h4 id="375">3.7.5 持久化与辅助</h4>
+<pre><code class="language-python">ctx.save_state(&quot;progress&quot;, {&quot;stage&quot;: 3})    # 跨运行保留，按脚本隔离（JSON）
+ctx.load_state(&quot;progress&quot;, default={})       # 不存在返回 default
+ctx.clear_state(&quot;progress&quot;)                  # 传 None 清空全部
+
+proto, body = ctx.wait_any([8271, 8273], timeout=5)   # 多协议谁先到返回谁
+ctx.sleep_jitter(1.0, 0.3)                   # 1s ±30% 随机，降低机械特征
+ctx.is_online()                              # 长驻脚本自检（断线判断）
+ctx.warn(&quot;提示&quot;)                              # 带 ⚠ 前缀
+ctx.debug(&quot;细节&quot;)                             # 仅调试版输出，发布版静默
+</code></pre>
+<h4 id="376">3.7.6 实战：自己封装一个业务操作</h4>
+<p><strong>① 查询 + 解析（兑换次数）</strong></p>
+<pre><code class="language-python">def exchange_remain(ctx):
+    body = ctx.request(8274, b&quot;&quot;, expect=8275, timeout=5)
+    if body is None:
+        return {}
+    r = ctx.reader(body)
+    n = r.readInt()
+    out = {}
+    for _ in range(n):
+        item_id = r.readInt()
+        out[item_id] = r.readShort()
+    return out
+</code></pre>
+<p><strong>② 进副本（5419 直连）</strong></p>
+<pre><code class="language-python">def enter_dungeon(ctx, pass_id):
+    w = ctx.writer()
+    w.writeInt(int(pass_id))
+    ctx.send(5419, w.bytes())
+    body = ctx.wait(5395, timeout=8)      # 5395 = 副本开始
+    return body is not None
+</code></pre>
+<p><strong>③ 释放技能（1282）</strong></p>
+<pre><code class="language-python">def cast_skill(ctx, skill_id, x, y):
+    w = ctx.writer()
+    w.writeInt(int(skill_id))
+    w.writeShort(int(x)).writeShort(int(y))
+    ctx.send(1282, w.bytes())
+</code></pre>
+<p><strong>④ 条件规则：只在特定包出现时动作</strong></p>
+<pre><code class="language-python">h = ctx.listen(801, lambda b: ctx.send(769, ctx.writer().writeInt(0).bytes()),
+               match=b&quot;\x04&quot;)   # 仅 dropType=4
+</code></pre>
+<h4 id="377">3.7.7 注意事项</h4>
+<ul>
+<li>打包格式为<strong>小端</strong>；<code>writeUTF</code> 为 <code>ushort 长度 + UTF-8</code>，与 <code>readUTF</code>/<code>_read_utf</code> 一致</li>
+<li>脚本结束后所有监听自动解除，无需手动清理（但长驻规则建议显式 <code>unlisten</code>）</li>
+<li>监听/应答只是通道，<strong>风控仍需自己控制频率</strong>；自动应答循环（A→B→A）务必用 <code>once=True</code></li>
+<li>除 PK / PVP 外，所有客户端能发的协议都可以用 <code>ctx.send</code> + <code>ctx.writer</code> 复现</li>
+</ul>
+<hr />
+<h2 id="4">4. 退出与错误</h2>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctx.exit()</code></td>
+<td>日志“脚本主动退出”，任务回到 idle</td>
+</tr>
+<tr>
+<td><code>ctx.exit("原因")</code></td>
+<td>先写日志再退出</td>
+</tr>
+<tr>
+<td>用户点停止</td>
+<td>抛 <code>ScriptStop</code>，日志“已停止”</td>
+</tr>
+<tr>
+<td>未捕获异常</td>
+<td>日志打印完整 traceback，任务回到 idle，App 不崩</td>
+</tr>
+<tr>
+<td>语法错误</td>
+<td>保存阶段就拒绝，提示行号和列号</td>
+</tr>
+<tr>
+<td>缺入口函数</td>
+<td>保存阶段拒绝</td>
+</tr>
+</tbody>
+</table>
+<p>推荐写法：</p>
+<pre><code class="language-python">def run(ctx):
+    try:
+        do_work(ctx)
+    except Exception as e:
+        ctx.log(&quot;出错：%s&quot; % e)
+        ctx.alert(&quot;脚本出错&quot;, str(e))
+        raise
+</code></pre>
+<hr />
+<h2 id="5">5. 完整示例：城池孵蛋（插件式，不登录）</h2>
+<p>下面是可运行的骨架。协议号/包体需要你按实际抓包结果替换，其余部分是标准写法。</p>
+<pre><code class="language-python"># @name 城池孵蛋
+# @version 1.0.0
+# @author 我
+# @api 1
+# @desc 复用 App 已登录连接，按次数孵蛋
+# @entry run
+
+def run(ctx):
+    info = ctx.info()
+    if not info[&quot;online&quot;]:
+        ctx.alert(&quot;未上线&quot;, &quot;请先在 App 登录，再运行这个脚本&quot;)
+        return
+
+    ctx.log(&quot;当前角色=%s uid=%s 地图=%s&quot; % (info[&quot;role&quot;], info[&quot;uid&quot;], info[&quot;map&quot;]))
+
+    mode = ctx.select(&quot;孵蛋模式&quot;, [&quot;普通蛋&quot;, &quot;高级蛋&quot;, &quot;全部&quot;], 0)
+    if mode &lt; 0:
+        ctx.log(&quot;用户取消&quot;)
+        return
+
+    text = ctx.input(&quot;孵化次数&quot;, &quot;例如 10&quot;, &quot;10&quot;)
+    if text is None:
+        return
+    try:
+        times = max(1, int(text))
+    except ValueError:
+        ctx.alert(&quot;参数错误&quot;, &quot;次数必须是整数&quot;)
+        return
+
+    if not ctx.confirm(&quot;确认&quot;, &quot;模式=%d，次数=%d，开始？&quot; % (mode, times)):
+        return
+
+    for i in range(times):
+        ctx.check_stop()
+
+        # ---- 这里换成你的抓包协议 ----
+        # proto, body = 抓包得到的孵蛋请求
+        # ctx.send(proto, body)
+        # ----------------------------
+
+        ctx.log(&quot;第 %d/%d 次已发送&quot; % (i + 1, times))
+        ctx.sleep(2.0)          # 给服务器结算时间，同时响应停止
+
+    ctx.toast(&quot;孵蛋完成&quot;)
+    ctx.exit(&quot;孵蛋脚本结束&quot;)
+</code></pre>
+<p>要点：</p>
+<ol>
+<li><strong>不登录</strong>：<code>ctx</code> 拿到的就是 App 当前会话。</li>
+<li><strong>参数问用户</strong>：<code>select</code> / <code>input</code> 返回 Python 原生类型，直接参与逻辑。</li>
+<li><strong>节奏自己控</strong>：<code>ctx.sleep</code> 可被停止；不要用 <code>time.sleep</code>。</li>
+<li><strong>结果靠查</strong>：<code>send</code> 是单向的，需要结果时用 <code>ctx.bag()</code> / <code>ctx.status()</code> / <code>ctx.soul_list()</code> 轮询。</li>
+</ol>
+<hr />
+<h2 id="6">6. 调试建议</h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>排查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行按钮没反应</td>
+<td>是否已上线；是否已有副本/抓捕在跑</td>
+</tr>
+<tr>
+<td>提示“请先登录”</td>
+<td>App 顶栏是否显示在线</td>
+</tr>
+<tr>
+<td>弹窗不出现</td>
+<td>是否在 App 前台；PC 端没有 UI</td>
+</tr>
+<tr>
+<td>停止很久才生效</td>
+<td>脚本是否在 <code>ctx.dungeon()</code> 里，或循环没写 <code>check_stop</code></td>
+</tr>
+<tr>
+<td>保存被拒</td>
+<td>看提示：语法错误行列 / 缺 <code>def run(ctx)</code> / 超 256KB / <code>@api</code> 过高</td>
+</tr>
+<tr>
+<td>脚本跑完但列表没变</td>
+<td>切到「脚本」页会重新拉取；或点一次运行结束后自动刷新</td>
+</tr>
+</tbody>
+</table>
+<p>日志里会出现：</p>
+<pre><code>[脚本] 开始运行「xxx」（脚本ID）
+[脚本:xxx] ...
+[脚本] 正常结束「xxx」
+[脚本] 已停止「xxx」
+[脚本] 脚本主动退出「xxx」
+</code></pre>
+<hr />
+<h2 id="7">7. 限制与后续</h2>
+<p>当前 API v1 不支持：</p>
+<ul>
+<li>多文件脚本 / 第三方依赖包</li>
+<li>等待某个协议回包的 <code>wait_for(proto)</code>（后续可加）</li>
+<li>多选弹窗（当前只有单选）</li>
+<li>脚本参数配置页（参数用 <code>input/select</code> 现场问）</li>
+<li>脚本之间互相调用</li>
+</ul>
+<hr />
+<h2 id="8">8. 安全</h2>
+<ul>
+<li>第三方脚本拥有与 App 相同的协议能力（包括 <code>ctx.send</code>），<strong>能绕过所有风控节奏</strong>。</li>
+<li>App 首次导入会弹风险确认；脚本列表会对原始协议脚本打标。</li>
+<li>只运行你信任的脚本；脚本导致的封号、回档、装备损失无法恢复。</li>
+</ul>
+<hr />
+<h2 id="9-v19157">9. 内置插件与协议速查（v1.9.157）</h2>
+<h3 id="91-plugin_treasure_droppy-v220">9.1 天降宝箱（<code>plugin_treasure_drop.py</code> v2.2.0）</h3>
+<ul>
+<li>前置：新桃源村（<code>ctx.gs.login_mode == 1</code>）；<code>login_mode == 0</code> 时提示退出，<code>2</code>（未知）时继续以 801 下发为准。</li>
+<li>内部协议：<code>801</code> 掉落物进视野、<code>802</code> 被拾取、<code>8995</code> 活动状态、<code>8996/8997</code> 拾取、<code>769</code> 移动/瞬移。</li>
+<li>逻辑：持续接收 801 → 取最近目标 → 瞬移（<code>769</code> 大坐标）→ <code>8996(id,1)</code> → 等 3.2s → <code>8996(id,2)</code>；无宝箱时等待下一批下发。</li>
+<li>停止条件：拾满 20 个 / <code>ret ∈ {15,25,26}</code> / <code>8995</code> 活动状态归零 / 连续 5 次 <code>ret=22</code> / 兜底 70 分钟。</li>
+<li><code>ret=22</code> 为服务器静默（非必然上限），不再立即停止。</li>
+<li>宝箱 id 为负数，发包用 <code>&lt;ii</code>（等价于 <code>writeUnsignedInt</code> 的 wire 表示）。</li>
+</ul>
+<h3 id="92-plugin_minigame_ddppy-v100">9.2 星魂对对碰（<code>plugin_minigame_ddp.py</code> v1.0.0）</h3>
+<ul>
+<li>无需特定场景，主城在线即可；对应客户端 <code>CheatDuiDuiPengControl</code>。</li>
+<li>协议：<code>8270(score, combo)</code> 上报分数 → <code>8271(当前积分, 今日积分)</code>；<code>8274</code> 查兑换信息 → <code>8275(n, n*(itemId, remain))</code>；<code>8272(itemId)</code> 兑换 → <code>8273(itemId, count, ret)</code>。</li>
+<li>关键机制：上报 <code>5000</code>，服务端按 <code>score/10 = 500</code> 计入，<strong>每日上限 5000</strong>，故 10 次正好刷满。</li>
+<li>默认兑换物：<code>12076</code>（小彩星魂礼包），每日 1 次。</li>
+<li><code>8273 ret</code>：0=成功、1=物品不存在、2=积分不足、3=已达最大兑换次数、4=背包已满。</li>
+<li>脚本会在今日积分已满时自动跳过上报，直接兑换。</li>
+</ul>
+<h3 id="93-plugin_forgepy-v220">9.3 锻造锤击（<code>plugin_forge.py</code> v2.2.0）</h3>
+<ul>
+<li>协议：<code>30902→30903</code> 查询、<code>30992(hit)</code>→<code>30993</code> 锤击。</li>
+<li><code>hit</code> 由客户端计算，脚本固定上报 <code>hit=1</code>（完美命中）。</li>
+<li><code>30903</code> 尾部：<code>short duanZaoCount</code>（-1 归一化为 0）+ <code>int duanzaoEndTime</code>（0=无冷却）。</li>
+</ul>
+<h3 id="94-vs">9.4 协议编号 vs 用途（易错）</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>拾取协议</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新桃源村主城宝箱</td>
+<td><strong>8996 / 8997</strong></td>
+<td><code>checkRedPacketCollect()</code> 为真</td>
+</tr>
+<tr>
+<td>副本宝箱</td>
+<td>5556 / 5557</td>
+<td><code>request_chest_pass_pick</code></td>
+</tr>
+<tr>
+<td>主城普通掉落物</td>
+<td>1027 + 802</td>
+<td>无读条</td>
+</tr>
+</tbody>
+</table></article>
+</div></div>
+
+<footer><div class="wrap">神将世界助手 · v1.9.157 · 脚本 API 参考 · 文档随版本更新</div></footer>
+</body>
+</html>
